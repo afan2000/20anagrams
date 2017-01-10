@@ -8,15 +8,15 @@ using namespace std;
 int main()
 {
 	int wordTable[27][20] = { 0 };
-	int rowSize = (sizeof(wordTable) / sizeof(wordTable[1])) - 1;
+	int rowSize = (sizeof(wordTable) / sizeof(wordTable[1]))-1;
 	int colSize = sizeof(wordTable) / rowSize;
 	cout << rowSize << '\n';
 	int i = 0;
 	int z = 1;
 	char c;
 
-
-	for (i; i < rowSize; i++)
+	exitLoop:
+	for (; i < rowSize; i+= 1)
 	{
 		cout << "enter word " << i + 1 << ": ";
 		c = getchar();
@@ -24,7 +24,7 @@ int main()
 		for (; c != '\n';)//puts letters of word into table array
 		{
 			c = toupper(c);
-			wordTable[i][c - 'A'] += 1; //converts letters into decimal equivalent, adds 1 to position in array
+			wordTable[c - 'A'][i] += 1; //converts letters into decimal equivalent, adds 1 to position in array
 			c = getchar();
 		}
 		for (int j = 0; j < rowSize; j++) //check for repeated digits in rows
@@ -40,7 +40,7 @@ int main()
 
 			}
 		}
-	exitLoop:
 	}
+
 }
 
