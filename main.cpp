@@ -7,16 +7,18 @@ using namespace std;
 
 int main()
 {
-	int wordTable[27][20] = { 0 };
-	int rowSize = (sizeof(wordTable) / sizeof(wordTable[1]))-1;
-	int colSize = sizeof(wordTable) / rowSize;
+	int wordTable[10][27] = { 0 };
+
+	int rowSize = (sizeof(wordTable) / sizeof(wordTable[1])); ////how many rows (10)
+	int colSize = ((sizeof(wordTable) / rowSize)/sizeof(wordTable[0][0]))-1; 
 	cout << rowSize << '\n';
 	int i = 0;
 	int z = 1;
+	int j;
 	char c;
 
 	exitLoop:
-	for (; i < rowSize; i+= 1)
+	while(i < rowSize)
 	{
 		cout << "enter word " << i + 1 << ": ";
 		c = getchar();
@@ -24,23 +26,31 @@ int main()
 		for (; c != '\n';)//puts letters of word into table array
 		{
 			c = toupper(c);
-			wordTable[c - 'A'][i] += 1; //converts letters into decimal equivalent, adds 1 to position in array
+			wordTable[i][c - 'A'] += 1; //converts letters into decimal equivalent, adds 1 to position in array
 			c = getchar();
 		}
-		for (int j = 0; j < rowSize; j++) //check for repeated digits in rows
+		for (j = i; j > 0; j--) //j = current position (j-- goes up 1 row)
 		{
-			for (int x = i; x > 0; x--) //checks for repeated digits in columns
+			for (int x = 0; x < colSize; x++)
 			{
-				if (wordTable[j][x] != wordTable[j][x - 1])
+				if (wordTable[i][x] != wordTable[j][x])
 				{
-					wordTable[27][x] = z;
 					z++;
+					wordTable[i][26] = z;
+					cout << wordTable[i][26] << '\n';
+					i++;
 					goto exitLoop;
 				}
-
 			}
 		}
+		wordTable[i][26] = wordTable[j][26];
+		cout << wordTable[i][26] << '\n';
+		i++;
+
 	}
+	//cout << wordTable;
+
+
 
 }
 
